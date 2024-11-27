@@ -3,6 +3,7 @@ import eslintPluginImport from 'eslint-plugin-import';
 import eslintPluginReact from 'eslint-plugin-react';
 import eslintPluginJsxA11y from 'eslint-plugin-jsx-a11y';
 import eslintPluginReactHooks from 'eslint-plugin-react-hooks';
+import globals from 'globals'; // Импортируем пакет globals
 
 export default [
     js.configs.recommended,
@@ -13,8 +14,10 @@ export default [
             ecmaVersion: 2022,
             sourceType: 'module',
             globals: {
-                window: 'readonly',
-                document: 'readonly',
+                ...globals.browser, // Используем глобальные переменные для браузера
+                ...globals.node,    // Используем глобальные переменные для Node.js
+                console: 'readonly', // Разрешение на использование console
+                debugger: 'readonly', // Разрешение на использование debugger
             },
         },
         plugins: {
@@ -31,6 +34,7 @@ export default [
             'react/prop-types': 'off',
             'react-hooks/rules-of-hooks': 'error',
             'react-hooks/exhaustive-deps': 'warn',
+            'no-debugger': 'off', // Отключение правила no-debugger
         },
         settings: {
             react: {
